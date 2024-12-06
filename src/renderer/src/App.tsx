@@ -1,35 +1,50 @@
-import Versions from './components/Versions'
-import electronLogo from './assets/electron.svg'
+import { useState } from 'react'
+import { SidebarProvider } from './components/ui/sidebar'
+import TheSidebar from './thesidebar'
+import { PageContext, ShelfContext, ShelvesContext } from './contexts'
+import { Shelf } from './types'
+import ShelfPage from './pages/shelf/shelf'
 
-function App(): JSX.Element {
-  const ipcHandle = (): void => window.electron.ipcRenderer.send('ping')
+export default function App() {
+  const [page, setPage] = useState<number>(1)
+  const [shelf, setShelf] = useState<number>(0)
+  const [shelves, setShelves] = useState<Shelf[]>(
+    JSON.parse(
+      localStorage.getItem('shelves') ??
+        JSON.stringify([
+          {
+            name: 'Unshelved',
+            books: []
+          }
+        ])
+    )
+  )
+
+  const pages = [
+    <div>kjslkfsjlf</div>, // reserved viewer
+    // `pages` is used to index these, in order as appears on the sidebar
+    <div>Home</div>,
+    <ShelfPage shelf={shelves[shelf]} />,
+    <div />,
+    <div />,
+    <div />,
+    <div />,
+    <div />,
+    <div />
+  ]
 
   return (
-    <>
-      <img alt="logo" className="logo" src={electronLogo} />
-      <div className="creator">Powered by electron-vite</div>
-      <div className="text">
-        Build an Electron app with <span className="react">React</span>
-        &nbsp;and <span className="ts">TypeScript</span>
-      </div>
-      <p className="tip">
-        Please try pressing <code>F12</code> to open the devTool
-      </p>
-      <div className="actions">
-        <div className="action">
-          <a href="https://electron-vite.org/" target="_blank" rel="noreferrer">
-            Documentation
-          </a>
-        </div>
-        <div className="action">
-          <a target="_blank" rel="noreferrer" onClick={ipcHandle}>
-            Send IPC
-          </a>
-        </div>
-      </div>
-      <Versions></Versions>
-    </>
+    <SidebarProvider>
+      <ShelfContext.Provider value={[shelf, setShelf]}>
+        <ShelvesContext.Provider value={[shelves, setShelves]}>
+          <PageContext.Provider value={[page, setPage]}>
+            <div className="flex dark:bg-neutral-950 dark:text-neutral-50 h-screen w-screen">
+              <TheSidebar />
+              {pages[page]}
+            </div>
+          </PageContext.Provider>
+        </ShelvesContext.Provider>
+      </ShelfContext.Provider>
+    </SidebarProvider>
   )
 }
-
-export default App
