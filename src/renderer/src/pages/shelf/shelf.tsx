@@ -2,14 +2,17 @@ import { SidebarInset } from '@renderer/components/ui/sidebar'
 import { Shelf } from '@renderer/types'
 import BookOnShelf from './book'
 import Header from '@renderer/components/header'
+import { Library } from 'lucide-react'
 
 export default function ShelfPage({ shelf }: { shelf: Shelf }) {
   return (
     <SidebarInset>
       <Header path={['The Library', 'My Shelves', shelf.name]} />
-      <div className="p-8 prose dark:prose-invert !max-w-none">
-        <h1 className="text-7xl">{shelf.name}</h1>
-        <div className="items-start w-full flex flex-wrap gap-4">
+      <div className="p-12 prose dark:prose-invert !max-w-none">
+        <h1 className="text-5xl flex gap-4 items-end">
+          <Library className="h-14 w-14" /> {shelf.name}
+        </h1>
+        <div className="items-start w-full flex flex-wrap gap-8">
           {shelf.books.map((book) => (
             <BookOnShelf book={book} />
           ))}

@@ -13,7 +13,7 @@ export default function Home() {
     <SidebarInset>
       <Header path={['The Library']} />
       <div className="prose prose-neutral dark:prose-invert p-12 !max-w-none">
-        <h1 className="text-5xl flex gap-4">
+        <h1 className="text-5xl flex gap-4 items-end">
           <LibraryBig className="h-12 w-12" /> Your Shelves
         </h1>
         <div className="flex flex-col gap-8">
