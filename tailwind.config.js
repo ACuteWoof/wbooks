@@ -18,7 +18,7 @@ module.exports = {
     },
     fontFamily: {
       sans: ['IBM Plex Sans'],
-      serif: ['IBM Plex Serif'],
+      serif: ['Domine', 'IBM Plex Serif'],
       mono: ['IBM Plex Mono']
     },
     extend: {

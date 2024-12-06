@@ -1,8 +1,16 @@
+export interface Note {
+  elementId: string
+  note: string
+  color: string
+}
+
 export interface Book {
   name: string
   author: string
-  year?: number
   location: string
+  year?: number
+  leftoffpage?: number
+  notes?: Note[]
 }
 
 export interface Shelf {
