@@ -22,7 +22,10 @@ export default function Home() {
               <div className="flex gap-2 px-8 pt-4 font-bold">
                 <Library /> {shelf.name}
               </div>
-              <div className="w-full flex-col flex-wrap overflow-auto flex px-8 gap-8 h-64 py-4" id="homeshelf">
+              <div
+                className="w-full flex-col flex-wrap overflow-auto flex px-8 gap-8 h-64 py-4"
+                id="homeshelf"
+              >
                 {shelf.books.map((book) => (
                   <img
                     src="https://assets.lulu.com/cover_thumbs/5/7/57gkz9r-front-shortedge-384.jpg"

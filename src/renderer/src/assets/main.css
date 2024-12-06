@@ -35,14 +35,14 @@
   }
 
   ::-webkit-scrollbar-track {
-    @apply bg-neutral-900 rounded-b-lg;
+    @apply bg-neutral-200 dark:bg-neutral-900 rounded-b-lg;
   }
 
   ::-webkit-scrollbar-thumb {
-    @apply bg-neutral-800 rounded-full;
+    @apply bg-neutral-300 dark:bg-neutral-800 rounded-full;
   }
 
   ::-webkit-scrollbar-thumb:hover {
-    @apply bg-neutral-700;
+    @apply bg-neutral-400 dark:bg-neutral-700;
   }
 }
