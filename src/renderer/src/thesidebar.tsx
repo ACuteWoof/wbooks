@@ -29,6 +29,20 @@ import {
 import { Input } from './components/ui/input'
 import { Label } from './components/ui/label'
 import { Button } from './components/ui/button'
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuTrigger
+} from './components/ui/context-menu'
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from './components/ui/alert-dialog'
 
 export default function TheSidebar() {
   const [shelvesVisible, setShelvesVisible] = useState<boolean>(false)
@@ -89,15 +103,51 @@ export default function TheSidebar() {
                         <SidebarMenuSub>
                           {shelves.map((s: Shelf, i: number) => (
                             <SidebarMenuSubItem>
-                              <SidebarMenuButton
-                                onClick={() => {
-                                  setPage(2)
-                                  setShelf(i)
-                                }}
-                              >
-                                <Library />
-                                {s.name}
-                              </SidebarMenuButton>
+                              <AlertDialog>
+                                <ContextMenu>
+                                  <ContextMenuTrigger>
+                                    <SidebarMenuButton
+                                      onClick={() => {
+                                        setPage(2)
+                                        setShelf(i)
+                                      }}
+                                    >
+                                      <Library />
+                                      {s.name}
+                                    </SidebarMenuButton>
+                                  </ContextMenuTrigger>
+                                  <ContextMenuContent>
+                                    <AlertDialogTrigger asChild>
+                                      <ContextMenuItem>Delete</ContextMenuItem>
+                                    </AlertDialogTrigger>
+                                  </ContextMenuContent>
+                                </ContextMenu>
+                                <AlertDialogContent className="dark:dark dark:text-neutral-50">
+                                  <AlertDialogTitle>
+                                    Are you sure you want to delete{' '}
+                                    <span className="italic">{s.name ?? ''}</span>?
+                                  </AlertDialogTitle>
+                                  <AlertDialogDescription>
+                                    This action cannot be reversed. Your books will remain in their
+                                    directories, but there will be no reference to them here.
+                                  </AlertDialogDescription>
+                                  <div className="flex w-full gap-2">
+                                    <div className="mr-auto" />
+                                    <AlertDialogCancel asChild>
+                                      <Button variant="outline">Cancel</Button>
+                                    </AlertDialogCancel>
+                                    <Button
+                                      variant="destructive"
+                                      asChild
+                                      onClick={() => {
+                                        setShelves(shelves.filter((x) => x !== s))
+                                      }}
+                                    >
+                                      <AlertDialogCancel>Delete</AlertDialogCancel>
+                                    </Button>
+                                  </div>
+                                </AlertDialogContent>
+                              </AlertDialog>
                             </SidebarMenuSubItem>
                           ))}
                           <SidebarMenuSubItem>

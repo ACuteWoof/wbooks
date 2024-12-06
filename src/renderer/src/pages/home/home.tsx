@@ -28,7 +28,7 @@ export default function Home() {
               >
                 {shelf.books.map((book) => (
                   <img
-                    src="https://assets.lulu.com/cover_thumbs/5/7/57gkz9r-front-shortedge-384.jpg"
+                    src={'file://' + book.cover}
                     className={'border-2 cursor-pointer max-h-52 max-w-52 m-0'}
                     onClick={() => {
                       setPage(0)

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { SidebarProvider } from './components/ui/sidebar'
 import TheSidebar from './thesidebar'
 import { BookContext, PageContext, ShelfContext, ShelvesContext } from './contexts'
@@ -13,7 +13,8 @@ export default function App() {
     name: 'The Trinity',
     author: 'St. Augustine',
     year: 417,
-    location: '/home/acutewoof/Basement/Books/the-trinity.epub'
+    location: '/home/acutewoof/Basement/Books/the-trinity.epub',
+    cover: '/home/acutewoof/Pictures/wallpapers/0001.jpg'
   }
 
   const [page, setPage] = useState<number>(1)
@@ -65,6 +66,10 @@ export default function App() {
     <div />,
     <div />
   ]
+
+  useEffect(() => {
+    localStorage.setItem('shelves', JSON.stringify(shelves))
+  }, [shelves])
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">

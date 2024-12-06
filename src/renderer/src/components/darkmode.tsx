@@ -7,9 +7,9 @@ export default function DarkModeTrigger() {
 
   return (
     <Button
-      variant="ghost"
+      variant="outline"
       size="icon"
-      className="h-8 w-8"
+      className="h-9 w-9 rounded-md"
       onClick={() => {
         if (theme === 'light') {
           setTheme('dark')

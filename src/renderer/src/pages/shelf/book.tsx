@@ -12,7 +12,7 @@ export default function BookOnShelf({ book, className }: { book: Book; className
       <div className="">
         <HoverCardTrigger>
           <img
-            src="https://assets.lulu.com/cover_thumbs/5/7/57gkz9r-front-shortedge-384.jpg"
+            src={'file://' + book.cover}
             className={'border-2 cursor-pointer max-h-96 max-w-96 m-0 ' + className}
             onClick={() => {
               setPage(0)
