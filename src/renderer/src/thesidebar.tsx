@@ -19,17 +19,23 @@ import { Shelf } from './types'
 import { HiOutlineLibrary } from 'react-icons/hi'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger
 } from './components/ui/dialog'
+import { Input } from './components/ui/input'
+import { Label } from './components/ui/label'
+import { Button } from './components/ui/button'
 
 export default function TheSidebar() {
   const [shelvesVisible, setShelvesVisible] = useState<boolean>(false)
-  const [shelves] = useContext(ShelvesContext)
   const [, setPage] = useContext(PageContext)
   const [, setShelf] = useContext(ShelfContext)
+  const [shelves, setShelves] = useContext(ShelvesContext)
+  const [newShelfName, setNewShelfName] = useState<string>()
 
   return (
     <Sidebar>
@@ -102,10 +108,32 @@ export default function TheSidebar() {
                                   Add Shelf
                                 </SidebarMenuButton>
                               </DialogTrigger>
-                              <DialogContent>
+                              <DialogContent className="dark:text-neutral-50">
                                 <DialogHeader>
                                   <DialogTitle>Add New Shelf</DialogTitle>
                                 </DialogHeader>
+                                <div className="flex flex-col gap-1.5">
+                                  <Label>Shelf Name</Label>
+                                  <Input
+                                    placeholder="Fiction"
+                                    onChange={(e) => {
+                                      setNewShelfName(e.target.value)
+                                    }}
+                                  />
+                                </div>
+                                <DialogFooter>
+                                  <DialogClose asChild>
+                                    <Button
+                                      disabled={!newShelfName}
+                                      onClick={() => {
+                                        if (!newShelfName) return
+                                        setShelves([{ name: newShelfName, books: [] }, ...shelves])
+                                      }}
+                                    >
+                                      Create Shelf
+                                    </Button>
+                                  </DialogClose>
+                                </DialogFooter>
                               </DialogContent>
                             </Dialog>
                           </SidebarMenuSubItem>
