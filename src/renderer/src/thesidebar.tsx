@@ -17,6 +17,13 @@ import { useContext, useState } from 'react'
 import { PageContext, ShelfContext, ShelvesContext } from './contexts'
 import { Shelf } from './types'
 import { HiOutlineLibrary } from 'react-icons/hi'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger
+} from './components/ui/dialog'
 
 export default function TheSidebar() {
   const [shelvesVisible, setShelvesVisible] = useState<boolean>(false)
@@ -88,10 +95,19 @@ export default function TheSidebar() {
                             </SidebarMenuSubItem>
                           ))}
                           <SidebarMenuSubItem>
-                            <SidebarMenuButton>
-                              <Plus />
-                              Add Shelf
-                            </SidebarMenuButton>
+                            <Dialog>
+                              <DialogTrigger asChild>
+                                <SidebarMenuButton>
+                                  <Plus />
+                                  Add Shelf
+                                </SidebarMenuButton>
+                              </DialogTrigger>
+                              <DialogContent>
+                                <DialogHeader>
+                                  <DialogTitle>Add New Shelf</DialogTitle>
+                                </DialogHeader>
+                              </DialogContent>
+                            </Dialog>
                           </SidebarMenuSubItem>
                         </SidebarMenuSub>
                       </motion.div>

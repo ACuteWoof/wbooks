@@ -1,11 +1,12 @@
 import { useState } from 'react'
-import { SidebarProvider, SidebarTrigger } from './components/ui/sidebar'
+import { SidebarProvider } from './components/ui/sidebar'
 import TheSidebar from './thesidebar'
-import { BookContext, IsDarkContext, PageContext, ShelfContext, ShelvesContext } from './contexts'
+import { BookContext, PageContext, ShelfContext, ShelvesContext } from './contexts'
 import { Book, Shelf } from './types'
 import ShelfPage from './pages/shelf/shelf'
 import Viewer from './pages/viewer/viewer'
 import Home from './pages/home/home'
+import { ThemeProvider } from './components/theme-provider'
 
 export default function App() {
   const sampleBook: Book = {
@@ -45,7 +46,6 @@ export default function App() {
         ])
     )
   )
-  const [isDark, setIsDark] = useState<boolean>(true)
 
   const pages = [
     <div className="w-full h-full">
@@ -67,23 +67,21 @@ export default function App() {
   ]
 
   return (
-    <div className={' ' + (isDark ? 'dark' : '')}>
+    <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
       <SidebarProvider>
-        <IsDarkContext.Provider value={[isDark, setIsDark]}>
-          <BookContext.Provider value={[currentBook, setCurrentBook]}>
-            <ShelfContext.Provider value={[shelf, setShelf]}>
-              <ShelvesContext.Provider value={[shelves, setShelves]}>
-                <PageContext.Provider value={[page, setPage]}>
-                  <div className="m-0 flex dark:bg-neutral-950 dark:text-neutral-50 min-h-screen w-screen">
-                    <TheSidebar />
-                    {pages[page]}
-                  </div>
-                </PageContext.Provider>
-              </ShelvesContext.Provider>
-            </ShelfContext.Provider>
-          </BookContext.Provider>
-        </IsDarkContext.Provider>
+        <BookContext.Provider value={[currentBook, setCurrentBook]}>
+          <ShelfContext.Provider value={[shelf, setShelf]}>
+            <ShelvesContext.Provider value={[shelves, setShelves]}>
+              <PageContext.Provider value={[page, setPage]}>
+                <div className="m-0 flex dark:bg-neutral-950 dark:text-neutral-50 min-h-screen w-screen">
+                  <TheSidebar />
+                  {pages[page]}
+                </div>
+              </PageContext.Provider>
+            </ShelvesContext.Provider>
+          </ShelfContext.Provider>
+        </BookContext.Provider>
       </SidebarProvider>
-    </div>
+    </ThemeProvider>
   )
 }
