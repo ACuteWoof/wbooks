@@ -17,13 +17,6 @@ import { ThemeProvider } from './components/theme-provider'
 import Header from './components/header'
 
 export default function App() {
-  const sampleBook: Book = {
-    name: 'Crime And Punishment',
-    author: 'Fyodor Dostoevsky',
-    year: 10,
-    location: '/home/acutewoof/Basement/Books/Crime_and_Punishment.epub'
-  }
-
   const [page, setPage] = useState<number>(1)
   const [shelf, setShelf] = useState<number>(0)
   const [currentBook, setCurrentBook] = useState<Book>()
@@ -34,31 +27,7 @@ export default function App() {
   })
   const [toc, setToc] = useState<ReactNode[]>([])
   const [shelves, setShelves] = useState<Shelf[]>(
-    JSON.parse(
-      localStorage.getItem('shelves') ??
-        JSON.stringify([
-          {
-            name: 'The Unshelved Shelf',
-            books: new Array(10).fill(sampleBook)
-          },
-          {
-            name: 'The Unshelved Shelf',
-            books: new Array(10).fill(sampleBook)
-          },
-          {
-            name: 'The Unshelved Shelf',
-            books: new Array(10).fill(sampleBook)
-          },
-          {
-            name: 'The Unshelved Shelf',
-            books: new Array(10).fill(sampleBook)
-          },
-          {
-            name: 'The Unshelved Shelf',
-            books: new Array(10).fill(sampleBook)
-          }
-        ])
-    )
+    JSON.parse(localStorage.getItem('shelves') ?? JSON.stringify([]))
   )
 
   const pages = [

@@ -144,9 +144,20 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
         </h1>
         <motion.div className="items-start w-full flex flex-wrap gap-8">
           {shelf.books.length === 0 && (
-            <h3 className="flex gap-4 items-center">
+            <motion.h3
+              key={'nobook' + shelf}
+              initial={{ opacity: 0, x: -10 }}
+              exit={{ opacity: 0, x: 10, transition: { delay: 0 } }}
+              animate={{
+                opacity: 1,
+                x: 0,
+                transition: { delay: 0.2, duration: 0.3 }
+              }}
+              transition={{ duration: 0.1 }}
+              className="flex gap-4 items-center"
+            >
               <Frown /> No books here yet.
-            </h3>
+            </motion.h3>
           )}
           {shelf.books.map((book, i) => (
             <motion.div
