@@ -1,7 +1,14 @@
-import { useEffect, useState } from 'react'
+import { ReactNode, useEffect, useState } from 'react'
 import { SidebarInset, SidebarProvider } from './components/ui/sidebar'
 import TheSidebar from './thesidebar'
-import { BookContext, HeaderContext, PageContext, ShelfContext, ShelvesContext } from './contexts'
+import {
+  BookContext,
+  HeaderContext,
+  PageContext,
+  ShelfContext,
+  ShelvesContext,
+  TableOfContentsContext
+} from './contexts'
 import { Book, HeaderContextProps, Shelf } from './types'
 import ShelfPage from './pages/shelf/shelf'
 import Viewer from './pages/viewer/viewer'
@@ -25,6 +32,7 @@ export default function App() {
     previousPathLength: 2,
     path: ['The Library', 'Lobby']
   })
+  const [toc, setToc] = useState<ReactNode[]>([])
   const [shelves, setShelves] = useState<Shelf[]>(
     JSON.parse(
       localStorage.getItem('shelves') ??
@@ -79,23 +87,25 @@ export default function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="ui-theme">
       <SidebarProvider>
-        <HeaderContext.Provider value={[headerProps, setHeaderProps]}>
-          <BookContext.Provider value={[currentBook, setCurrentBook]}>
-            <ShelfContext.Provider value={[shelf, setShelf]}>
-              <ShelvesContext.Provider value={[shelves, setShelves]}>
-                <PageContext.Provider value={[page, setPage]}>
-                  <div className="relative m-0 flex dark:bg-neutral-950 dark:text-neutral-50 min-h-screen w-screen">
-                    <TheSidebar />
-                    <SidebarInset>
-                      <Header />
-                      {pages[page]}
-                    </SidebarInset>
-                  </div>
-                </PageContext.Provider>
-              </ShelvesContext.Provider>
-            </ShelfContext.Provider>
-          </BookContext.Provider>
-        </HeaderContext.Provider>
+        <TableOfContentsContext.Provider value={[toc, setToc]}>
+          <HeaderContext.Provider value={[headerProps, setHeaderProps]}>
+            <BookContext.Provider value={[currentBook, setCurrentBook]}>
+              <ShelfContext.Provider value={[shelf, setShelf]}>
+                <ShelvesContext.Provider value={[shelves, setShelves]}>
+                  <PageContext.Provider value={[page, setPage]}>
+                    <div className="relative m-0 flex dark:bg-neutral-950 dark:text-neutral-50 min-h-screen w-screen">
+                      <TheSidebar />
+                      <SidebarInset>
+                        <Header />
+                        {pages[page]}
+                      </SidebarInset>
+                    </div>
+                  </PageContext.Provider>
+                </ShelvesContext.Provider>
+              </ShelfContext.Provider>
+            </BookContext.Provider>
+          </HeaderContext.Provider>
+        </TableOfContentsContext.Provider>
       </SidebarProvider>
     </ThemeProvider>
   )

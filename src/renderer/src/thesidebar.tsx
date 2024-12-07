@@ -14,7 +14,7 @@ import {
 import { Collapsible, CollapsibleTrigger } from './components/ui/collapsible'
 import { AnimatePresence, motion } from 'motion/react'
 import { useContext, useEffect, useState } from 'react'
-import { PageContext, ShelfContext, ShelvesContext } from './contexts'
+import { PageContext, ShelfContext, ShelvesContext, TableOfContentsContext } from './contexts'
 import { Shelf } from './types'
 import { HiOutlineLibrary } from 'react-icons/hi'
 import {
@@ -46,6 +46,7 @@ import {
 
 export default function TheSidebar() {
   const [shelvesVisible, setShelvesVisible] = useState<boolean>(false)
+  const [toc] = useContext(TableOfContentsContext)
   const [page, setPage] = useContext(PageContext)
   const [, setShelf] = useContext(ShelfContext)
   const [shelves, setShelves] = useContext(ShelvesContext)
@@ -58,12 +59,36 @@ export default function TheSidebar() {
 
   return (
     <Sidebar className="max-h-screen overflow-y-auto">
-      <SidebarContent className="flex justify-between">
-        {page === 0 && (
-          <SidebarGroup>
-            <SidebarGroupLabel>Table Of Contents</SidebarGroupLabel>
-          </SidebarGroup>
-        )}
+      <SidebarContent className="flex">
+        <AnimatePresence>
+          {page === 0 && (
+            <motion.div
+              key="toc"
+              initial={{
+                height: 0
+              }}
+              animate={{
+                height: 'auto',
+                flexGrow: 1
+              }}
+              exit={{
+                height: 0,
+                flexGrow: 0
+              }}
+              transition={{
+                duration: 0.1
+              }}
+              className={'overflow-auto ' + (page !== 0 ? 'overflow-hidden' : '')}
+            >
+              <SidebarGroup>
+                <SidebarGroupLabel>Table Of Contents</SidebarGroupLabel>
+                <SidebarGroupContent>
+                  <SidebarMenu>{toc}</SidebarMenu>
+                </SidebarGroupContent>
+              </SidebarGroup>
+            </motion.div>
+          )}
+        </AnimatePresence>
         <Collapsible
           className="group/applicationcollapse"
           onOpenChange={(o) => {

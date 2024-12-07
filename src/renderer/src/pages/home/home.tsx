@@ -44,13 +44,13 @@ export default function Home() {
                   }
                 }}
                 transition={{ duration: 0.1, ease: 'linear', stiffness: 0 }}
-                className="bg-neutral-100 dark:bg-neutral-900 rounded-lg flex flex-col border"
+                className="bg-neutral-100/30 dark:bg-neutral-900/30 rounded-lg pt-2 flex flex-col border"
               >
                 <div className="flex gap-2 px-8 pt-4 font-bold">
                   <Library /> {shelf.name}
                 </div>
                 <div
-                  className="w-fit max-w-full flex-col flex-wrap overflow-auto flex px-8 gap-8 h-64 py-4"
+                  className="w-fit max-w-full flex-col flex-wrap overflow-auto flex px-8 gap-8 h-64 py-4 justify-center"
                   id="homeshelf"
                 >
                   <AnimatePresence>
@@ -73,7 +73,8 @@ export default function Home() {
                         <TheBook
                           shelf={i}
                           book={book}
-                          className="max-h-52 max-w-40 w-fit prose-h1:text-sm prose-p:text-xs prose-sm overflow-hidden "
+                          dummyClassName="!p-4"
+                          className="max-h-48 max-w-32 w-fit prose-h1:text-sm prose-p:text-xs prose-sm overflow-hidden "
                         />
                       </motion.div>
                     ))}

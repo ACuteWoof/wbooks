@@ -1,130 +1,107 @@
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbSeparator
-} from '@renderer/components/ui/breadcrumb'
+import { Breadcrumb, BreadcrumbItem, BreadcrumbSeparator } from '@renderer/components/ui/breadcrumb'
 import { Separator } from '@renderer/components/ui/separator'
 import DarkModeTrigger from '@renderer/components/darkmode'
 import { SidebarTrigger } from './ui/sidebar'
 import { AnimatePresence, motion } from 'motion/react'
-import { ReactNode, useContext, useEffect } from 'react'
+import { ReactNode, useContext } from 'react'
 import { HeaderContext } from '@renderer/contexts'
 
 export default function Header() {
-  const [{ path, previousPathLength, rightElements, visible }, setProps] = useContext(HeaderContext)
-
-  useEffect(() => {
-    ;(async () => {
-      if (!path) return
-      await timeout(100 * path.length)
-      setProps({
-        previousPathLength: path.length,
-        rightElements: rightElements,
-        path,
-        visible
-      })
-    })()
-  }, [path])
+  const [props] = useContext(HeaderContext)
 
   return (
     <header
       className={
         'bg-white/90 dark:bg-neutral-950/90 backdrop-blur sticky top-0 z-10 flex h-16 shrink-0 items-center gap-2 border-b px-4 mb-2 transition-all duration-500 ' +
-        (visible ? 'opacity-100' : 'opacity-0 hover:opacity-100')
+        (props.visible ? 'opacity-100' : 'opacity-0 hover:opacity-100')
       }
     >
       <SidebarTrigger className="-ml-1" />
       <Separator orientation="vertical" className="mr-2 h-4" />
       <Breadcrumb>
-        <BreadcrumbList>
-          <AnimatePresence>
-            {path &&
-              previousPathLength &&
-              path.map((p, i) => {
-                if (i === path.length - 1) {
+        <motion.ol className="flex flex-wrap items-center gap-1.5 break-words text-sm text-neutral-500 sm:gap-2.5 dark:text-neutral-400">
+          <AnimatePresence mode="popLayout">
+            {props.path &&
+              props.previousPathLength &&
+              props.path.map((p, i) => {
+                if (i === props.path.length - 1) {
                   return (
-                    <motion.div
+                    <motion.li
                       key={i + p + 'norm'}
-                      initial={{ opacity: 0, x: -10 }}
+                      initial={{ opacity: 0, y: -10 }}
                       animate={{
                         opacity: 1,
-                        y: 0,
-                        x: 0,
-                        transition: { delay: 0.1 + 0.1 * (previousPathLength ?? 1) }
+                        y: 0
                       }}
                       exit={{
                         opacity: 0,
                         y: 10
                       }}
-                      transition={{ duration: 0.1 }}
+                      transition={{ duration: 0.25 }}
+                      layout
                     >
                       <BreadcrumbItem className="text-neutral-950 dark:text-neutral-50">
                         {p}
                       </BreadcrumbItem>
-                    </motion.div>
+                    </motion.li>
                   )
                 }
                 return [
-                  <motion.div
+                  <motion.li
                     key={i + p + 'norm'}
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, y: -10 }}
                     animate={{
                       opacity: 1,
-                      x: 0,
-                      transition: { delay: 0.1 + 0.05 * (previousPathLength - i) }
+                      y: 0
                     }}
                     exit={{
                       opacity: 0,
-                      x: -10,
-                      transition: { delay: 0.1 * (path.length - 1 - i) }
+                      y: -10
                     }}
-                    transition={{ duration: 0.05 }}
+                    transition={{ duration: 0.25 }}
+                    layout
                   >
                     <BreadcrumbItem>{p}</BreadcrumbItem>
-                  </motion.div>,
-                  <motion.div
+                  </motion.li>,
+                  <motion.li
                     key={i + p + 'sep'}
-                    initial={{ opacity: 0, x: -10 }}
+                    initial={{ opacity: 0, y: -10 }}
                     animate={{
                       opacity: 1,
-                      x: 0,
-                      transition: { delay: 0.05 * (previousPathLength - i) }
+                      y: 0
                     }}
                     exit={{
                       opacity: 0,
-                      x: -10,
-                      transition: { delay: 0.1 * (path.length - 1 - i) }
+                      y: -10
                     }}
-                    transition={{ duration: 0.05 }}
+                    transition={{ duration: 0.25 }}
+                    layout
                   >
                     <BreadcrumbSeparator />
-                  </motion.div>
+                  </motion.li>
                 ]
               })}
           </AnimatePresence>
-        </BreadcrumbList>
+        </motion.ol>
       </Breadcrumb>
       <div className="flex-grow" />
       <div className="flex gap-4 items-center">
         <AnimatePresence>
-          {rightElements &&
-            rightElements.map((element: ReactNode, i) => {
+          {props.rightElements &&
+            props.rightElements.map((element: ReactNode, i) => {
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, x: 10 }}
+                  initial={{ opacity: 0, y: -10 }}
                   animate={{
                     opacity: 1,
-                    x: 0,
-                    transition: { delay: 0.05 }
+                    y: 0
                   }}
                   exit={{
                     opacity: 0,
-                    x: 10,
-                    transition: { delay: 0.05 * i }
+                    y: -10
                   }}
-                  transition={{ duration: 0.05 }}
+                  transition={{ duration: 0.25 }}
                 >
                   {element}
                 </motion.div>
@@ -135,8 +112,4 @@ export default function Header() {
       </div>
     </header>
   )
-}
-
-function timeout(delay: number) {
-  return new Promise((res) => setTimeout(res, delay))
 }
