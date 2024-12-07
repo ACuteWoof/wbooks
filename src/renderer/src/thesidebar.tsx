@@ -106,7 +106,7 @@ export default function TheSidebar() {
                             setPage(1)
                           }}
                         >
-                          <Home /> Home
+                          <Home /> Lobby
                         </SidebarMenuButton>
                       </SidebarMenuItem>
                       <Collapsible

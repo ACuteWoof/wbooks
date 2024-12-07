@@ -51,7 +51,7 @@ export default function Header() {
                         opacity: 1,
                         y: 0,
                         x: 0,
-                        transition: { delay: 0.1 * (previousPathLength ?? 1) }
+                        transition: { delay: 0.1 + 0.1 * (previousPathLength ?? 1) }
                       }}
                       exit={{
                         opacity: 0,
@@ -72,12 +72,12 @@ export default function Header() {
                     animate={{
                       opacity: 1,
                       x: 0,
-                      transition: { delay: 0.05 }
+                      transition: { delay: 0.1 + 0.05 * (previousPathLength - i) }
                     }}
                     exit={{
                       opacity: 0,
                       x: -10,
-                      transition: { delay: 0.05 * (path.length - 1 - i) }
+                      transition: { delay: 0.1 * (path.length - 1 - i) }
                     }}
                     transition={{ duration: 0.05 }}
                   >
@@ -89,12 +89,12 @@ export default function Header() {
                     animate={{
                       opacity: 1,
                       x: 0,
-                      transition: { delay: 0.05 }
+                      transition: { delay: 0.05 * (previousPathLength - i) }
                     }}
                     exit={{
                       opacity: 0,
                       x: -10,
-                      transition: { delay: 0.05 * (path.length - 1 - i) }
+                      transition: { delay: 0.1 * (path.length - 1 - i) }
                     }}
                     transition={{ duration: 0.05 }}
                   >

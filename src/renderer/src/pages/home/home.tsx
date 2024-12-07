@@ -12,7 +12,7 @@ export default function Home() {
     setHeaderProps({
       ...headerProps,
       visible: true,
-      path: ['The Library'],
+      path: ['The Library', 'Lobby'],
       rightElements: []
     })
   }, [])

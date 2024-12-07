@@ -7,7 +7,6 @@ import ShelfPage from './pages/shelf/shelf'
 import Viewer from './pages/viewer/viewer'
 import Home from './pages/home/home'
 import { ThemeProvider } from './components/theme-provider'
-import { AnimatePresence } from 'motion/react'
 import Header from './components/header'
 
 export default function App() {
@@ -23,8 +22,8 @@ export default function App() {
   const [currentBook, setCurrentBook] = useState<Book>()
   const [headerProps, setHeaderProps] = useState<HeaderContextProps>({
     visible: true,
-    previousPathLength: 1,
-    path: ['The Library']
+    previousPathLength: 2,
+    path: ['The Library', 'Lobby']
   })
   const [shelves, setShelves] = useState<Shelf[]>(
     JSON.parse(
