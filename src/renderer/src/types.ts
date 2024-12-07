@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export interface Note {
   elementId: string
   note: string
@@ -17,4 +19,10 @@ export interface Book {
 export interface Shelf {
   name: string
   books: Book[]
+}
+
+export interface HeaderContextProps {
+  visible: boolean
+  path?: string[]
+  rightElements?: ReactNode[]
 }

@@ -26,63 +26,63 @@ export default function BookOnShelf({ book, className }: { book: Book; className
   const [shelves, setShelves] = useContext(ShelvesContext)
 
   return (
-    <AlertDialog>
-      <HoverCard>
-        <div className="">
-          <HoverCardTrigger className="!no-underline">
-            <ContextMenu>
-              <ContextMenuTrigger>
-                <TheBook className={className} book={book} />
-              </ContextMenuTrigger>
-              <ContextMenuContent>
-                <AlertDialogTrigger asChild>
-                  <ContextMenuItem>Remove</ContextMenuItem>
-                </AlertDialogTrigger>
-              </ContextMenuContent>
-            </ContextMenu>
-          </HoverCardTrigger>
-          <HoverCardContent className="flex flex-col gap-2">
-            <span className="font-bold">{book.name}</span>
-            <span className="text-sm">
-              {book.author}
-              {book.year &&
-                ', ' +
-                  (book.year < 1000
-                    ? book.year >= 0
-                      ? `${book.year} AD`
-                      : `${Math.abs(book.year)} BC`
-                    : book.year)}
-            </span>
-          </HoverCardContent>
-        </div>
-      </HoverCard>
-      <AlertDialogContent className="dark:text-neutral-50">
-        <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you sure you want to remove <em>{book.name ?? ''}</em>?
-          </AlertDialogTitle>
-        </AlertDialogHeader>
-        <AlertDialogDescription>
-          This will not delete the file from your computer, only hide it from the app.
-        </AlertDialogDescription>
-        <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button asChild variant="destructive">
-            <AlertDialogCancel
-              onClick={() => {
-                const newShelves = [...shelves]
-                newShelves[shelfIndex].books = shelves[shelfIndex].books.filter(
-                  (sb) => !Object.is(sb, book)
-                )
-                setShelves(newShelves)
-              }}
-            >
-              Remove
-            </AlertDialogCancel>
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
+      <AlertDialog>
+        <HoverCard>
+          <div className="">
+            <HoverCardTrigger className="!no-underline">
+              <ContextMenu>
+                <ContextMenuTrigger>
+                  <TheBook className={className} book={book} />
+                </ContextMenuTrigger>
+                <ContextMenuContent>
+                  <AlertDialogTrigger asChild>
+                    <ContextMenuItem>Remove</ContextMenuItem>
+                  </AlertDialogTrigger>
+                </ContextMenuContent>
+              </ContextMenu>
+            </HoverCardTrigger>
+            <HoverCardContent className="flex flex-col gap-2">
+              <span className="font-bold">{book.name}</span>
+              <span className="text-sm">
+                {book.author}
+                {book.year &&
+                  ', ' +
+                    (book.year < 1000
+                      ? book.year >= 0
+                        ? `${book.year} AD`
+                        : `${Math.abs(book.year)} BC`
+                      : book.year)}
+              </span>
+            </HoverCardContent>
+          </div>
+        </HoverCard>
+        <AlertDialogContent className="dark:text-neutral-50">
+          <AlertDialogHeader>
+            <AlertDialogTitle>
+              Are you sure you want to remove <em>{book.name ?? ''}</em>?
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+          <AlertDialogDescription>
+            This will not delete the file from your computer, only hide it from the app.
+          </AlertDialogDescription>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <Button asChild variant="destructive">
+              <AlertDialogCancel
+                onClick={() => {
+                  const newShelves = [...shelves]
+                  newShelves[shelfIndex].books = shelves[shelfIndex].books.filter(
+                    (sb) => !Object.is(sb, book)
+                  )
+                  setShelves(newShelves)
+                }}
+              >
+                Remove
+              </AlertDialogCancel>
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
   )
 }
 
