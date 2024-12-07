@@ -58,7 +58,9 @@ export default function BookOnShelf({ book, className }: { book: Book; className
       </HoverCard>
       <AlertDialogContent className="dark:text-neutral-50">
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you sure you want to remove {book.name ?? ''}?</AlertDialogTitle>
+          <AlertDialogTitle>
+            Are you sure you want to remove <em>{book.name ?? ''}</em>?
+          </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>
           This will not delete the file from your computer, only hide it from the app.
@@ -69,13 +71,13 @@ export default function BookOnShelf({ book, className }: { book: Book; className
             <AlertDialogCancel
               onClick={() => {
                 const newShelves = [...shelves]
-                newShelves[shelfIndex].books = shelves[shelfIndex].books.filter((sb) =>
-                  !Object.is(sb, book)
+                newShelves[shelfIndex].books = shelves[shelfIndex].books.filter(
+                  (sb) => !Object.is(sb, book)
                 )
                 setShelves(newShelves)
               }}
             >
-              Delete
+              Remove
             </AlertDialogCancel>
           </Button>
         </AlertDialogFooter>

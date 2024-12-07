@@ -118,7 +118,7 @@ export default function TheSidebar() {
                                   </ContextMenuTrigger>
                                   <ContextMenuContent>
                                     <AlertDialogTrigger asChild>
-                                      <ContextMenuItem>Delete</ContextMenuItem>
+                                      <ContextMenuItem>Remove</ContextMenuItem>
                                     </AlertDialogTrigger>
                                   </ContextMenuContent>
                                 </ContextMenu>
@@ -143,7 +143,7 @@ export default function TheSidebar() {
                                         setShelves(shelves.filter((x) => x !== s))
                                       }}
                                     >
-                                      <AlertDialogCancel>Delete</AlertDialogCancel>
+                                      <AlertDialogCancel>Remove</AlertDialogCancel>
                                     </Button>
                                   </div>
                                 </AlertDialogContent>

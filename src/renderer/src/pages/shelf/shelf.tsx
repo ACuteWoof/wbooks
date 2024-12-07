@@ -37,7 +37,7 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
             </DialogTrigger>
             <DialogContent className="dark:text-neutral-50">
               <DialogHeader>
-                <DialogTitle>Add A Book To The {shelf.name} Shelf</DialogTitle>
+                <DialogTitle>Add a book to <em>{shelf.name}</em></DialogTitle>
               </DialogHeader>
               <Input
                 type="file"
