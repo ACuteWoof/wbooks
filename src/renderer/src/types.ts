@@ -23,6 +23,7 @@ export interface Shelf {
 
 export interface HeaderContextProps {
   visible: boolean
-  path?: string[]
+  path: string[]
   rightElements?: ReactNode[]
+  previousPathLength?: number
 }

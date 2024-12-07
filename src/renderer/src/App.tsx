@@ -21,7 +21,11 @@ export default function App() {
   const [page, setPage] = useState<number>(1)
   const [shelf, setShelf] = useState<number>(0)
   const [currentBook, setCurrentBook] = useState<Book>()
-  const [headerProps, setHeaderProps] = useState<HeaderContextProps>({ visible: true })
+  const [headerProps, setHeaderProps] = useState<HeaderContextProps>({
+    visible: true,
+    previousPathLength: 1,
+    path: ['The Library']
+  })
   const [shelves, setShelves] = useState<Shelf[]>(
     JSON.parse(
       localStorage.getItem('shelves') ??
@@ -59,7 +63,7 @@ export default function App() {
       )}
     </div>,
     // `pages` is used to index these, in order as appears on the sidebar
-    <Home key="home" />,
+    <Home />,
     <ShelfPage shelf={shelves[shelf]} />,
     <div />,
     <div />,
@@ -84,15 +88,8 @@ export default function App() {
                   <div className="relative m-0 flex dark:bg-neutral-950 dark:text-neutral-50 min-h-screen w-screen">
                     <TheSidebar />
                     <SidebarInset>
-                      <AnimatePresence>
-                        {headerProps.visible && (
-                          <Header
-                            path={headerProps.path ?? ['The Library']}
-                            rightElements={headerProps.rightElements}
-                          />
-                        )}
-                        {pages[page]}
-                      </AnimatePresence>
+                      <Header />
+                      {pages[page]}
                     </SidebarInset>
                   </div>
                 </PageContext.Provider>

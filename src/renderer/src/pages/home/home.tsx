@@ -6,11 +6,14 @@ import { AnimatePresence, motion } from 'motion/react'
 
 export default function Home() {
   const [shelves] = useContext(ShelvesContext)
-  const [, setHeaderProps] = useContext(HeaderContext)
+  const [headerProps, setHeaderProps] = useContext(HeaderContext)
 
   useEffect(() => {
     setHeaderProps({
-      visible: true
+      ...headerProps,
+      visible: true,
+      path: ['The Library'],
+      rightElements: []
     })
   }, [])
 
@@ -28,12 +31,18 @@ export default function Home() {
         </h1>
         <div className="flex flex-col gap-8">
           <AnimatePresence>
-            {shelves.map((shelf) => (
+            {shelves.map((shelf, i) => (
               <motion.div
                 key={shelf.name + 'card'}
-                initial={{ x: -10 }}
-                exit={{ x: 10 }}
-                animate={{ x: 0 }}
+                initial={{ opacity: 0, x: -10 }}
+                exit={{ opacity: 0, x: 10 }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: {
+                    delay: 0.1 + 0.1 * i
+                  }
+                }}
                 transition={{ duration: 0.1, ease: 'linear', stiffness: 0 }}
                 className="bg-neutral-100 dark:bg-neutral-900 rounded-lg flex flex-col border"
               >
@@ -41,15 +50,34 @@ export default function Home() {
                   <Library /> {shelf.name}
                 </div>
                 <div
-                  className="w-full flex-col flex-wrap overflow-auto flex px-8 gap-8 h-64 py-4"
+                  className="w-fit max-w-full flex-col flex-wrap overflow-auto flex px-8 gap-8 h-64 py-4"
                   id="homeshelf"
                 >
-                  {shelf.books.map((book) => (
-                    <TheBook
-                      book={book}
-                      className="max-h-52 max-w-40 prose-h1:text-sm prose-p:text-xs prose-sm overflow-hidden "
-                    />
-                  ))}
+                  <AnimatePresence>
+                    {shelf.books.map((book, k) => (
+                      <motion.div
+                        key={book.location + 'card'}
+                        initial={{ opacity: 0, y: -10 }}
+                        exit={{ opacity: 0, y: 10 }}
+                        animate={{
+                          opacity: 1,
+                          x: 0,
+                          y: 0,
+                          transition: {
+                            delay: 0.1 + 0.1 * k
+                          }
+                        }}
+                        transition={{ duration: 0.1, ease: 'linear', stiffness: 0 }}
+                        className="flex-shrink"
+                      >
+                        <TheBook
+                          shelf={i}
+                          book={book}
+                          className="max-h-52 max-w-40 w-fit prose-h1:text-sm prose-p:text-xs prose-sm overflow-hidden "
+                        />
+                      </motion.div>
+                    ))}
+                  </AnimatePresence>
                 </div>
               </motion.div>
             ))}

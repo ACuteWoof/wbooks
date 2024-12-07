@@ -22,10 +22,11 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
   const [shelves, setShelves] = useContext(ShelvesContext)
   const [shelfIndex] = useContext(ShelfContext)
   const [customText, setCustomText] = useState<string>()
-  const [, setHeaderProps] = useContext(HeaderContext)
+  const [headerProps, setHeaderProps] = useContext(HeaderContext)
 
   useEffect(() => {
     setHeaderProps({
+      ...headerProps,
       visible: true,
       path: ['The Library', 'My Shelves', shelf.name],
       rightElements: [
@@ -59,7 +60,6 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
                 setNewBookPath(path)
                 const ebook = ePub('file://' + path)
                 const coverUrl = await ebook.coverUrl()
-                console.log(coverUrl)
                 const coverBlobUrl = await (await fetch(coverUrl!)).blob()
                 setNewBookCover(coverBlobUrl)
               }}
