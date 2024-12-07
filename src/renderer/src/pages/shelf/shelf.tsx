@@ -22,6 +22,7 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
   const [newBookCover, setNewBookCover] = useState<Blob>()
   const [shelves, setShelves] = useContext(ShelvesContext)
   const [shelfIndex] = useContext(ShelfContext)
+  const [customText, setCustomText] = useState<string>()
 
   return (
     <SidebarInset>
@@ -44,6 +45,14 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
                 onChange={async (e) => {
                   if (!e.target.files) return
                   const path = e.target.files[0].path
+
+                  if (shelf.books.find((bo) => bo.location === path)) {
+                    setCustomText('There is already a book in this shelf referring to this file.')
+                    return
+                  }
+
+                  setCustomText(undefined)
+
                   setNewBookPath(path)
                   const ebook = ePub('file://' + path)
                   const coverUrl = await ebook.coverUrl()
@@ -57,11 +66,15 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
                 className="max-h-48 max-w-48"
               />
               <div className="flex gap-2">
-                <div className="flex-grow" />
+                <div className="items-center flex flex-grow text-sm text-neutral-700 dark:text-neutral-300">
+                  {customText}
+                </div>
                 <DialogClose asChild>
                   <Button
+                    disabled={!newBookPath}
                     onClick={async () => {
                       if (!newBookPath) return
+
                       const ebook = { ...ePub('file://' + newBookPath) }
                       console.log(ebook)
                       const newBook = {
@@ -98,7 +111,7 @@ export default function ShelfPage({ shelf }: { shelf: Shelf }) {
             </h3>
           )}
           {shelf.books.map((book) => (
-            <BookOnShelf book={book} className='max-h-96' />
+            <BookOnShelf book={book} className="max-h-96" />
           ))}
         </div>
       </div>

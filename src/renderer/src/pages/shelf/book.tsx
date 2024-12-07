@@ -107,11 +107,11 @@ export function TheBook({ book, className }: { book: Book; className?: string })
   return useDummy ? (
     <div
       className={
-        'flex flex-col justify-between cursor-pointer bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-all duration-200 h-96 w-64 p-8 border-2 ' +
+        'prose-h1:text-2xl prose-p:text-sm flex flex-col justify-between cursor-pointer bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-all duration-200 h-96 w-64 p-8 border-2 ' +
         className
       }
     >
-      <h1 className="">{book.name}</h1>
+      <h1 className="break-words">{book.name}</h1>
       <p>{book.author}</p>
     </div>
   ) : (
