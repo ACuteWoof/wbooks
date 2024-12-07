@@ -177,7 +177,7 @@ export default function TheSidebar() {
                                       disabled={!newShelfName}
                                       onClick={() => {
                                         if (!newShelfName) return
-                                        setShelves([{ name: newShelfName, books: [] }, ...shelves])
+                                        setShelves([...shelves, { name: newShelfName, books: [] }])
                                       }}
                                     >
                                       Create Shelf

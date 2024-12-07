@@ -3,6 +3,7 @@ import { SidebarInset } from '@renderer/components/ui/sidebar'
 import { BookContext, PageContext, ShelvesContext } from '@renderer/contexts'
 import { Library, LibraryBig } from 'lucide-react'
 import { useContext } from 'react'
+import { TheBook } from '../shelf/book'
 
 export default function Home() {
   const [shelves] = useContext(ShelvesContext)
@@ -18,7 +19,7 @@ export default function Home() {
         </h1>
         <div className="flex flex-col gap-8">
           {shelves.map((shelf) => (
-            <div className="bg-neutral-200 dark:bg-neutral-900 rounded-lg flex flex-col border">
+            <div className="bg-neutral-100 dark:bg-neutral-900 rounded-lg flex flex-col border">
               <div className="flex gap-2 px-8 pt-4 font-bold">
                 <Library /> {shelf.name}
               </div>
@@ -27,14 +28,7 @@ export default function Home() {
                 id="homeshelf"
               >
                 {shelf.books.map((book) => (
-                  <img
-                    src={'file://' + book.cover}
-                    className={'border-2 cursor-pointer max-h-52 max-w-52 m-0'}
-                    onClick={() => {
-                      setPage(0)
-                      setBook(book)
-                    }}
-                  />
+                  <TheBook book={book} className="max-h-52 max-w-40 prose-h1:text-sm prose-p:text-xs prose-sm overflow-hidden " />
                 ))}
               </div>
             </div>

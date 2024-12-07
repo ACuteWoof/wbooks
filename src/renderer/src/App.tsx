@@ -10,11 +10,10 @@ import { ThemeProvider } from './components/theme-provider'
 
 export default function App() {
   const sampleBook: Book = {
-    name: 'The Trinity',
-    author: 'St. Augustine',
-    year: 417,
-    location: '/home/acutewoof/Basement/Books/the-trinity.epub',
-    cover: '/home/acutewoof/Pictures/wallpapers/0001.jpg'
+    name: 'Crime And Punishment',
+    author: 'Fyodor Dostoevsky',
+    year: 10,
+    location: '/home/acutewoof/Basement/Books/Crime_and_Punishment.epub',
   }
 
   const [page, setPage] = useState<number>(1)
