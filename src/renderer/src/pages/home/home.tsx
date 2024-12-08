@@ -20,8 +20,8 @@ export default function Home() {
   return (
     <motion.div
       key={'home'}
-      initial={{ x: -10 }}
-      exit={{ x: 10 }}
+      initial={{ x: -30 }}
+      exit={{ x: 30 }}
       animate={{ x: 0 }}
       transition={{ duration: 0.1, ease: 'linear', stiffness: 0 }}
     >
@@ -36,7 +36,22 @@ function ShelvesSection() {
   return (
     <div className="prose prose-neutral dark:prose-invert p-12 !max-w-none">
       <h1 className="text-5xl flex gap-4 items-end">
-        <LibraryBig className="h-12 w-12" /> Your Shelves
+        <LibraryBig className="h-12 w-12" />
+        <motion.div
+          initial={{ opacity: 0, y: '-20%' }}
+          animate={{
+            display: 'block',
+            opacity: 1,
+            y: 0,
+            transition: {
+              delay: 0.2
+            }
+          }}
+          exit={{ opacity: 0, y: '20%' }}
+          transition={{ duration: 0.1, ease: 'linear' }}
+        >
+          Your Shelves
+        </motion.div>
       </h1>
       <div className="flex flex-col gap-8">
         <AnimatePresence>

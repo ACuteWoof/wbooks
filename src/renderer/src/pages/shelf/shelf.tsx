@@ -29,8 +29,8 @@ export default function ShelfPage() {
   return (
     <motion.div
       key={'shelf'}
-      initial={{ opacity: 0, x: -10 }}
-      exit={{ opacity: 0, x: 10 }}
+      initial={{ opacity: 0, x: -30 }}
+      exit={{ opacity: 0, x: 30 }}
       animate={{
         opacity: 1,
         x: 0,
