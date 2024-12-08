@@ -90,11 +90,13 @@ export function TheBook({
   book,
   className,
   dummyClassName,
+  displayOnly,
   shelf
 }: {
   book: Book
   className?: string
   dummyClassName?: string
+  displayOnly?: boolean
   shelf: number
 }) {
   const [, setPage] = useContext(PageContext)
@@ -120,6 +122,7 @@ export function TheBook({
     <div
       className={`prose-h1:text-2xl prose-p:text-sm flex flex-col justify-between cursor-pointer bg-neutral-200 hover:bg-neutral-100 dark:bg-neutral-900 dark:hover:bg-neutral-800 transition-all duration-200 h-96 w-64 p-8 border-2 ${className} ${dummyClassName}`}
       onClick={() => {
+        if (displayOnly) return
         setPage(0)
         setBook(book)
         setShelf(shelf)
@@ -133,6 +136,7 @@ export function TheBook({
       src={coverUrl}
       className={'border-2 cursor-pointer m-0 aspect-auto w-fit ' + className}
       onClick={() => {
+        if (displayOnly) return
         setPage(0)
         setBook(book)
         setShelf(shelf)

@@ -108,7 +108,7 @@ export default function TheSidebar() {
             <AnimatePresence>
               {(applicationVisible || page != 0) && (
                 <motion.div
-                  key="presenceanimate"
+                  key="presenceanimateparent"
                   initial={{
                     height: 0
                   }}
@@ -168,137 +168,102 @@ export default function TheSidebar() {
                                 className={'overflow-y-hidden'}
                               >
                                 <SidebarMenuSub>
-                                  <AnimatePresence>
-                                    {shelves.map((s: Shelf, i: number) => (
-                                      <motion.div
-                                        layout
-                                        exit={{
-                                          y: -10,
-                                          opacity: 0
-                                        }}
-                                        animate={{
-                                          y: 0,
-                                          opacity: 1
-                                        }}
-                                        initial={{
-                                          y: -10,
-                                          opacity: 0
-                                        }}
-                                      >
-                                        <SidebarMenuSubItem>
-                                          <AlertDialog>
-                                            <ContextMenu>
-                                              <ContextMenuTrigger>
-                                                <SidebarMenuButton
-                                                  onClick={() => {
-                                                    setPage(2)
-                                                    setShelf(i)
-                                                  }}
-                                                >
-                                                  <Library />
-                                                  {s.name}
-                                                </SidebarMenuButton>
-                                              </ContextMenuTrigger>
-                                              <ContextMenuContent>
-                                                <AlertDialogTrigger asChild>
-                                                  <ContextMenuItem>Remove</ContextMenuItem>
-                                                </AlertDialogTrigger>
-                                              </ContextMenuContent>
-                                            </ContextMenu>
-                                            <AlertDialogContent className="dark:dark dark:text-neutral-50">
-                                              <AlertDialogTitle>
-                                                Are you sure you want to delete{' '}
-                                                <span className="italic">{s.name ?? ''}</span>?
-                                              </AlertDialogTitle>
-                                              <AlertDialogDescription>
-                                                This action cannot be reversed. Your books will
-                                                remain in their directories, but there will be no
-                                                reference to them here.
-                                              </AlertDialogDescription>
-                                              <div className="flex w-full gap-2">
-                                                <div className="mr-auto" />
-                                                <AlertDialogCancel asChild>
-                                                  <Button variant="outline">Cancel</Button>
-                                                </AlertDialogCancel>
-                                                <Button
-                                                  variant="destructive"
-                                                  asChild
-                                                  onClick={() => {
-                                                    if (shelf === i && page === 2) {
-                                                      setPage(1)
-                                                    }
-                                                    setShelves(
-                                                      shelves.filter((x) => !Object.is(x, s))
-                                                    )
-                                                  }}
-                                                >
-                                                  <AlertDialogCancel>Remove</AlertDialogCancel>
-                                                </Button>
-                                              </div>
-                                            </AlertDialogContent>
-                                          </AlertDialog>
-                                        </SidebarMenuSubItem>
-                                      </motion.div>
-                                    ))}
-                                  </AnimatePresence>
-                                  <motion.div
-                                    layout
-                                    exit={{
-                                      y: -10,
-                                      opacity: 0
-                                    }}
-                                    animate={{
-                                      y: 0,
-                                      opacity: 1
-                                    }}
-                                    initial={{
-                                      y: 10,
-                                      opacity: 0
-                                    }}
-                                  >
+                                  {shelves.map((s: Shelf, i: number) => (
                                     <SidebarMenuSubItem>
-                                      <Dialog>
-                                        <DialogTrigger asChild>
-                                          <SidebarMenuButton>
-                                            <Plus />
-                                            Add Shelf
-                                          </SidebarMenuButton>
-                                        </DialogTrigger>
-                                        <DialogContent className="dark:text-neutral-50">
-                                          <DialogHeader>
-                                            <DialogTitle>Add New Shelf</DialogTitle>
-                                          </DialogHeader>
-                                          <div className="flex flex-col gap-1.5">
-                                            <Label>Shelf Name</Label>
-                                            <Input
-                                              placeholder="Fiction"
-                                              onChange={(e) => {
-                                                setNewShelfName(e.target.value)
+                                      <AlertDialog>
+                                        <ContextMenu>
+                                          <ContextMenuTrigger>
+                                            <SidebarMenuButton
+                                              onClick={() => {
+                                                setPage(2)
+                                                setShelf(i)
                                               }}
-                                            />
+                                            >
+                                              <Library />
+                                              {s.name}
+                                            </SidebarMenuButton>
+                                          </ContextMenuTrigger>
+                                          <ContextMenuContent>
+                                            <AlertDialogTrigger asChild>
+                                              <ContextMenuItem>Remove</ContextMenuItem>
+                                            </AlertDialogTrigger>
+                                          </ContextMenuContent>
+                                        </ContextMenu>
+                                        <AlertDialogContent className="dark:dark dark:text-neutral-50">
+                                          <AlertDialogTitle>
+                                            Are you sure you want to delete{' '}
+                                            <span className="italic">{s.name ?? ''}</span>?
+                                          </AlertDialogTitle>
+                                          <AlertDialogDescription>
+                                            This action cannot be reversed. Your books will remain
+                                            in their directories, but there will be no reference to
+                                            them here.
+                                          </AlertDialogDescription>
+                                          <div className="flex w-full gap-2">
+                                            <div className="mr-auto" />
+                                            <AlertDialogCancel asChild>
+                                              <Button variant="outline">Cancel</Button>
+                                            </AlertDialogCancel>
+                                            <Button
+                                              variant="destructive"
+                                              asChild
+                                              onClick={() => {
+                                                if (shelf === i && page === 2) {
+                                                  setPage(1)
+                                                }
+                                                setShelves(shelves.filter((x) => !Object.is(x, s)))
+                                              }}
+                                            >
+                                              <AlertDialogCancel>Remove</AlertDialogCancel>
+                                            </Button>
                                           </div>
-                                          <DialogFooter>
-                                            <DialogClose asChild>
-                                              <Button
-                                                disabled={!newShelfName}
-                                                onClick={() => {
-                                                  if (!newShelfName) return
-                                                  const l = shelves.length
-                                                  setShelves([
-                                                    ...shelves,
-                                                    { name: newShelfName, books: [] }
-                                                  ])
-                                                  setShelf(l)
-                                                }}
-                                              >
-                                                Create Shelf
-                                              </Button>
-                                            </DialogClose>
-                                          </DialogFooter>
-                                        </DialogContent>
-                                      </Dialog>
+                                        </AlertDialogContent>
+                                      </AlertDialog>
                                     </SidebarMenuSubItem>
-                                  </motion.div>
+                                  ))}
+
+                                  <SidebarMenuSubItem>
+                                    <Dialog>
+                                      <DialogTrigger asChild>
+                                        <SidebarMenuButton>
+                                          <Plus />
+                                          Add Shelf
+                                        </SidebarMenuButton>
+                                      </DialogTrigger>
+                                      <DialogContent className="dark:text-neutral-50">
+                                        <DialogHeader>
+                                          <DialogTitle>Add New Shelf</DialogTitle>
+                                        </DialogHeader>
+                                        <div className="flex flex-col gap-1.5">
+                                          <Label>Shelf Name</Label>
+                                          <Input
+                                            placeholder="Fiction"
+                                            onChange={(e) => {
+                                              setNewShelfName(e.target.value)
+                                            }}
+                                          />
+                                        </div>
+                                        <DialogFooter>
+                                          <DialogClose asChild>
+                                            <Button
+                                              disabled={!newShelfName}
+                                              onClick={() => {
+                                                if (!newShelfName) return
+                                                const l = shelves.length
+                                                setShelves([
+                                                  ...shelves,
+                                                  { name: newShelfName, books: [] }
+                                                ])
+                                                setShelf(l)
+                                              }}
+                                            >
+                                              Create Shelf
+                                            </Button>
+                                          </DialogClose>
+                                        </DialogFooter>
+                                      </DialogContent>
+                                    </Dialog>
+                                  </SidebarMenuSubItem>
                                 </SidebarMenuSub>
                               </motion.div>
                             )}

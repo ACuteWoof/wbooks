@@ -13,7 +13,7 @@ import {
   TableOfContentsContext
 } from '@renderer/contexts'
 import { Book } from '@renderer/types'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect, useLayoutEffect, useState } from 'react'
 import ePub from 'epubjs'
 import { NavItem } from 'epubjs/types/navigation'
 import { ChevronRight, Dot } from 'lucide-react'
@@ -26,8 +26,7 @@ export default function Viewer({ book }: { book: Book }) {
   const [headerProps, setHeaderProps] = useContext(HeaderContext)
   const [toc, setToc] = useContext(TableOfContentsContext)
 
-  useEffect(() => {
-    console.log('use effect running')
+  useLayoutEffect(() => {
     toggleSidebar()
     setHeaderProps({
       ...headerProps,

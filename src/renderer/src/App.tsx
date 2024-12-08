@@ -40,7 +40,7 @@ export default function App() {
     </div>,
     // `pages` is used to index these, in order as appears on the sidebar
     <Home />,
-    <ShelfPage shelf={shelves[shelf]} />,
+    <ShelfPage />,
     <div />,
     <div />,
     <div />,
