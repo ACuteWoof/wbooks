@@ -80,7 +80,7 @@ function ShelvesSection() {
                 <AnimatePresence>
                   {shelf.books.map((book, k) => (
                     <motion.div
-                      key={book.location + 'card'}
+                      key={book.location + 'card' + shelf.name}
                       initial={{ opacity: 0, y: -10 }}
                       exit={{ opacity: 0, y: 10 }}
                       animate={{

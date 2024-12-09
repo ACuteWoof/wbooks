@@ -82,7 +82,7 @@ export default function ShelfPage() {
           )}
           {shelf.books.map((book, i) => (
             <motion.div
-              key={book.location}
+              key={shelf.name + '/' + book.location}
               initial={{ opacity: 0, x: -10 }}
               exit={{ opacity: 0, x: 10, transition: { delay: 0 } }}
               animate={{
