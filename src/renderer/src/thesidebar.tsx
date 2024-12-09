@@ -191,8 +191,7 @@ export default function TheSidebar() {
                                         </ContextMenu>
                                         <AlertDialogContent className="dark:dark dark:text-neutral-50">
                                           <AlertDialogTitle>
-                                            Are you sure you want to delete{' '}
-                                            <span className="italic">{s.name ?? ''}</span>?
+                                            Are you sure you want to remove {s.name ?? ''}?
                                           </AlertDialogTitle>
                                           <AlertDialogDescription>
                                             This action cannot be reversed. Your books will remain

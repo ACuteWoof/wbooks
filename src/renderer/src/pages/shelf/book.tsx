@@ -41,7 +41,7 @@ export default function BookOnShelf({ book, className }: { book: Book; className
               </ContextMenuContent>
             </ContextMenu>
           </HoverCardTrigger>
-          <HoverCardContent className="flex flex-col gap-2">
+          <HoverCardContent className="flex flex-col gap-2 overflow-auto">
             <span className="font-bold">{book.name}</span>
             <span className="text-sm">
               {book.author}
@@ -53,13 +53,19 @@ export default function BookOnShelf({ book, className }: { book: Book; className
                       : `${Math.abs(book.year)} BC`
                     : book.year)}
             </span>
+            {book.desc && (
+              <span className="text-xs max-h-32 flex flex-col gap-1">
+                <span dangerouslySetInnerHTML={{ __html: book.desc }}></span>
+                <span>&nbsp;</span>
+              </span>
+            )}
           </HoverCardContent>
         </div>
       </HoverCard>
       <AlertDialogContent className="dark:text-neutral-50">
         <AlertDialogHeader>
           <AlertDialogTitle>
-            Are you sure you want to remove <em>{book.name ?? ''}</em>?
+            Are you sure you want to remove {book.name ?? ''}?
           </AlertDialogTitle>
         </AlertDialogHeader>
         <AlertDialogDescription>

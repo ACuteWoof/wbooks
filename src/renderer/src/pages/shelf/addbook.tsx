@@ -40,10 +40,8 @@ export default function AddBook() {
         </Button>
       </DialogTrigger>
       <DialogContent className="dark:text-neutral-50 w-full max-w-screen-md">
-        <DialogHeader>
-          <DialogTitle>
-            Add a book to <em>{shelf.name}</em>
-          </DialogTitle>
+        <DialogHeader className="pb-2">
+          <DialogTitle>Add a book to {shelf.name}</DialogTitle>
         </DialogHeader>
         <Input
           type="file"
@@ -72,7 +70,7 @@ export default function AddBook() {
           }}
           className="hidden"
         />
-        <div className="flex items-center justify-between overflow-hidden max-h-96">
+        <div className="flex items-center justify-between overflow-hidden max-h-96 gap-8">
           <label htmlFor="fileupload" className="w-fit max-w-64 relative">
             {newBook ? (
               [
@@ -98,79 +96,81 @@ export default function AddBook() {
               </div>
             )}
           </label>
-          <div className="relative prose dark:prose-invert px-8 overflow-auto h-96 w-full">
-            <AnimatePresence>
-              {newBook
-                ? [
-                    <motion.h2
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-                      exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
-                      key={newBook.name}
-                    >
-                      {newBook.name}
-                    </motion.h2>,
-                    <motion.p
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-                      exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
-                      key={newBook.author + newBook.year}
-                    >
-                      {newBook.author}, {newBook.year}
-                    </motion.p>,
-                    newBook.desc && (
+          <div className="w-full h-96 max-h-96 flex flex-col justify-between gap-4">
+            <div className="relative prose dark:prose-invert px-8 overflow-auto flex-grow w-full">
+              <AnimatePresence>
+                {newBook
+                  ? [
+                      <motion.h2
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+                        exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
+                        key={newBook.name}
+                      >
+                        {newBook.name}
+                      </motion.h2>,
                       <motion.p
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
                         exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
-                        key={newBook.desc}
-                        dangerouslySetInnerHTML={{ __html: newBook.desc }}
-                      ></motion.p>
-                    )
-                  ]
-                : [
-                    <motion.h2
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-                      exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
-                      key={'Choose a file'}
-                    >
-                      Choose a file
-                    </motion.h2>,
-                    <motion.p
-                      initial={{ opacity: 0, x: -10 }}
-                      animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
-                      exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
-                      key={
-                        'Choose a file to view the metadata of the file here, then click done to add the book.'
-                      }
-                    >
-                      Choose a file to view the metadata of the file here, then click done to add
-                      the book.
-                    </motion.p>
-                  ]}
-            </AnimatePresence>
-          </div>
-        </div>
-        <div className="flex gap-2">
-          <div className="items-center flex flex-grow text-sm text-neutral-700 dark:text-neutral-300">
-            {customText}
-          </div>
-          <DialogClose asChild>
-            <Button
-              disabled={!newBook}
-              onClick={async () => {
-                if (!newBook) return
+                        key={newBook.author + newBook.year}
+                      >
+                        {newBook.author}, {newBook.year}
+                      </motion.p>,
+                      newBook.desc && (
+                        <motion.p
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+                          exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
+                          key={newBook.desc}
+                          dangerouslySetInnerHTML={{ __html: newBook.desc }}
+                        ></motion.p>
+                      )
+                    ]
+                  : [
+                      <motion.h2
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+                        exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
+                        key={'Choose a file'}
+                      >
+                        Choose a file
+                      </motion.h2>,
+                      <motion.p
+                        initial={{ opacity: 0, x: -10 }}
+                        animate={{ opacity: 1, x: 0, transition: { delay: 0.1 } }}
+                        exit={{ opacity: 0, x: 10, transition: { duration: 0.1 } }}
+                        key={
+                          'Choose a file to view the metadata of the file here, then click done to add the book.'
+                        }
+                      >
+                        Choose a file to view the metadata of the file here, then click done to add
+                        the book.
+                      </motion.p>
+                    ]}
+              </AnimatePresence>
+            </div>
+            <div className="flex gap-2">
+              <div className="pl-8 items-center flex flex-grow text-sm text-neutral-700 dark:text-neutral-300">
+                {customText}
+              </div>
+              <DialogClose asChild>
+                <Button
+                  disabled={!newBook}
+                  onClick={async () => {
+                    if (!newBook) return
 
-                const newShelves = [...shelves]
-                newShelves[shelfIndex].books = [newBook, ...shelf.books]
-                setShelves(newShelves)
-                setNewBook(undefined)
-              }}
-            >
-              Add
-            </Button>
-          </DialogClose>
+                    const newShelves = [...shelves]
+                    newShelves[shelfIndex].books = [newBook, ...shelf.books]
+                    setShelves(newShelves)
+                    setNewBook(undefined)
+                  }}
+                >
+                  Add
+                </Button>
+              </DialogClose>
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
