@@ -90,22 +90,23 @@ export default function ShelfPage() {
                   book.name.toLowerCase().includes(search.toLowerCase()) ||
                   book.desc?.toLowerCase().includes(search.toLowerCase())
               )
-          ).length === 0 && (
-            <motion.h3
-              key={'nobook' + shelf}
-              initial={{ opacity: 0, x: -10 }}
-              exit={{ opacity: 0, x: 10, transition: { delay: 0 } }}
-              animate={{
-                opacity: 1,
-                x: 0,
-                transition: { delay: 0.2, duration: 0.3 }
-              }}
-              transition={{ duration: 0.1 }}
-              className="flex gap-4 items-center"
-            >
-              <Frown /> No books found for search term {search}
-            </motion.h3>
-          )}
+          ).length === 0 &&
+            shelf.books.length != 0 && (
+              <motion.h3
+                key={'nobook' + shelf}
+                initial={{ opacity: 0, x: -10 }}
+                exit={{ opacity: 0, x: 10, transition: { delay: 0 } }}
+                animate={{
+                  opacity: 1,
+                  x: 0,
+                  transition: { delay: 0.2, duration: 0.3 }
+                }}
+                transition={{ duration: 0.1 }}
+                className="flex gap-4 items-center"
+              >
+                <Frown /> No books found for search term {search}
+              </motion.h3>
+            )}
           {shelf.books.length === 0 && (
             <motion.h3
               key={'nobook' + shelf}
