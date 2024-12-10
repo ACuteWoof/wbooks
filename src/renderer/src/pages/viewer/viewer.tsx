@@ -37,6 +37,7 @@ export default function Viewer({ book }: { book: Book }) {
 
     const ebook = ePub('file://' + book.location)
     console.log(ebook)
+
     ebook.loaded.navigation.then((navigation) => {
       setToc(
         navigation.toc.map((nav) => {
@@ -53,10 +54,6 @@ export default function Viewer({ book }: { book: Book }) {
       )
     })
   }, [book])
-
-  useEffect(() => {
-    console.log(toc)
-  }, [toc])
 
   return <div />
 }
