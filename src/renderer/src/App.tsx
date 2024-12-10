@@ -15,6 +15,7 @@ import Viewer from './pages/viewer/viewer'
 import Home from './pages/home/home'
 import { ThemeProvider } from './components/theme-provider'
 import Header from './components/header'
+import { AnimatePresence, motion } from 'motion/react'
 
 export default function App() {
   const [page, setPage] = useState<number>(1)
@@ -39,14 +40,34 @@ export default function App() {
       )}
     </div>,
     // `pages` is used to index these, in order as appears on the sidebar
-    <Home />,
-    <ShelfPage />,
-    <div />,
-    <div />,
-    <div />,
-    <div />,
-    <div />,
-    <div />
+    <motion.div
+      key={'home'}
+      initial={{ x: -30 }}
+      exit={{ x: 30 }}
+      animate={{ x: 0 }}
+      transition={{ duration: 0.1, ease: 'linear', stiffness: 0 }}
+    >
+      <Home />
+    </motion.div>,
+ <motion.div
+      key={'shelf'}
+      initial={{ opacity: 0, x: -30 }}
+      exit={{ opacity: 0, x: 30 }}
+      animate={{
+        opacity: 1,
+        x: 0,
+        transition: {
+          delay: 0.1
+        }
+      }}
+      transition={{ duration: 0.1, ease: 'linear' }}
+      className="w-full"
+    >
+    <ShelfPage />
+    </motion.div>
+    ,
+    <div className="text-7xl w-full h-full flex items-center justify-center">WIP</div>,
+    <div className="text-7xl w-full h-full flex items-center justify-center">WIP</div>
   ]
 
   useEffect(() => {
@@ -66,7 +87,7 @@ export default function App() {
                       <TheSidebar />
                       <SidebarInset>
                         <Header />
-                        {pages[page]}
+                        <AnimatePresence>{pages[page]}</AnimatePresence>
                       </SidebarInset>
                     </div>
                   </PageContext.Provider>

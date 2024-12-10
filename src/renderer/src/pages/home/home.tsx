@@ -17,17 +17,7 @@ export default function Home() {
     })
   }, [])
 
-  return (
-    <motion.div
-      key={'home'}
-      initial={{ x: -30 }}
-      exit={{ x: 30 }}
-      animate={{ x: 0 }}
-      transition={{ duration: 0.1, ease: 'linear', stiffness: 0 }}
-    >
-      {shelves && shelves.length > 0 && <ShelvesSection />}
-    </motion.div>
-  )
+  return [shelves && shelves.length > 0 && <ShelvesSection />]
 }
 
 function ShelvesSection() {
